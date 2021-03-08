@@ -6,13 +6,42 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Lab01</title>
+
+    <style>
+        #inputs-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        #inputs-wrapper > div {
+            margin-top: 10px;
+            width: 25%;
+        }
+    </style>
 </head>
 <body>
 <div>
-    <input type="number" class="input-field">
-    <input type="number" class="input-field">
-    <input type="number" class="input-field">
-    <input type="number" class="input-field">
+    <p>Dodawanie inputa</p>
+    <input id="number-of-new-inputs" type="number" />
+    <button id="add-input">Dodaj</button>
+</div>
+<br>
+<div id="inputs-wrapper">
+    <div>
+        <input type="number" class="input-field" />
+    </div>
+    <div>
+        <input type="number" class="input-field">
+    </div>
+    <div>
+        <input type="number" class="input-field">
+    </div>
+    <div>
+        <input type="number" class="input-field">
+    </div>
+    <div>
+        <input type="number" class="input-field">
+    </div>
 </div>
 <br>
 <div>
