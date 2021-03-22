@@ -6,9 +6,48 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Lab02</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <link href="./css/main.css" rel="stylesheet"/>
 </head>
 <body>
-<audio id="boom-sound" src="./sounds/boom.wav"></audio>
+<div class="container">
+    <div class="col-12 mt-2">
+        <div class="row text-center">
+            <h1>Simple Soundboard</h1>
+        </div>
+        <div class="row">
+            <div class="col-12 text-center">
+                <button type="button" class="btn btn-primary btn-lg uimanager-button" data-key="q">Q <span>boom</span></button>
+                <button type="button" class="btn btn-primary btn-lg uimanager-button" data-key="w">W <span>clap</span></button>
+                <button type="button" class="btn btn-primary btn-lg uimanager-button" data-key="e">E <span>hihat</span></button>
+            </div>
+        </div>
+        <div class="row mt-1 text-center">
+            <div class="col-12">
+                <button type="button" class="btn btn-primary btn-lg uimanager-button" data-key="a">A <span>kick</span></button>
+                <button type="button" class="btn btn-primary btn-lg uimanager-button" data-key="s">S <span>openhat</span></button>
+                <button type="button" class="btn btn-primary btn-lg uimanager-button" data-key="d">D <span>ride</span></button>
+            </div>
+        </div>
+        <div class="row mt-1 text-center">
+            <div class="col-12">
+                <button type="button" class="btn btn-primary btn-lg uimanager-button" data-key="z">Z <span>snare</span></button>
+                <button type="button" class="btn btn-primary btn-lg uimanager-button" data-key="x">X <span>tink</span></button>
+                <button type="button" class="btn btn-primary btn-lg uimanager-button" data-key="c">C <span>tom</span></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<audio src="./sounds/boom.wav" class="soundbar-sound" data-key="q"></audio>
+<audio src="./sounds/clap.wav" class="soundbar-sound" data-key="w"></audio>
+<audio src="./sounds/hihat.wav" class="soundbar-sound" data-key="e"></audio>
+<audio src="./sounds/kick.wav" class="soundbar-sound" data-key="a"></audio>
+<audio src="./sounds/openhat.wav" class="soundbar-sound" data-key="s"></audio>
+<audio src="./sounds/ride.wav" class="soundbar-sound" data-key="d"></audio>
+<audio src="./sounds/snare.wav" class="soundbar-sound" data-key="z"></audio>
+<audio src="./sounds/tink.wav" class="soundbar-sound" data-key="x"></audio>
+<audio src="./sounds/tom.wav" class="soundbar-sound" data-key="c"></audio>
 <script src="main.js"></script>
 </body>
 </html>

@@ -1,0 +1,12 @@
+.uimanager-button {
+    height: 75px;
+    width: 75px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.uimanager-button > span {
+    font-size: 12px;
+}

@@ -3,26 +3,64 @@ interface AudioRecordData {
     timeStamp: number;
 }
 
-class Soundboard {
-    private sounds: HTMLAudioElement[];
+class UIManager {
+    private readonly buttons: { [id: string]: HTMLElement };
 
     constructor() {
-        this.sounds = [];
+        this.buttons = {};
         this.init();
     }
 
     private init() {
-        const audioElement = document.querySelector<HTMLAudioElement>('#boom-sound');
+        const buttons = document.querySelectorAll<HTMLElement>('.uimanager-button');
 
-        if (audioElement) {
-            this.sounds.push(audioElement);
-        }
+        buttons.forEach((button) => {
+            let key = button.dataset.key;
+
+            if (key) {
+                this.buttons[key] = button;
+            }
+        });
     }
 
-    public playSound(soundName: string) {
-        console.log(soundName);
-        this.sounds[0].currentTime = 0;
-        this.sounds[0].play();
+    public blinkButton(key: string) {
+        const button = this.buttons[key];
+
+        if (!button) return;
+
+        button.classList.add('disabled');
+        setTimeout(() => {
+            button.classList.remove('disabled');
+        }, 200);
+    }
+}
+
+class Soundboard {
+    private readonly sounds: { [id: string]: HTMLAudioElement };
+
+    constructor(private uiManager: UIManager) {
+        this.sounds = {};
+        this.init();
+    }
+
+    private init() {
+        const audioElements = document.querySelectorAll<HTMLAudioElement>('.soundbar-sound');
+
+        audioElements.forEach((element) => {
+            let key = element.dataset.key;
+
+            if (key) {
+                this.sounds[key] = element;
+            }
+        });
+    }
+
+    public playSound(soundKey: string) {
+        if (this.sounds[soundKey]) {
+            this.sounds[soundKey].currentTime = 0;
+            this.sounds[soundKey].play();
+            this.uiManager.blinkButton(soundKey);
+        }
     }
 }
 
@@ -38,8 +76,6 @@ class AudioChannelRecorder {
     }
 
     public startRecording() {
-        console.log('Recording started');
-
         if (this.isRecording) return;
 
         this.isRecording = true;
@@ -47,8 +83,6 @@ class AudioChannelRecorder {
     }
 
     public stopRecording() {
-        console.log('Recording stopped.')
-
         if (!this.isRecording) return;
 
         this.isRecording = false;
@@ -82,7 +116,8 @@ class AudioChannelRecorder {
 
 }
 
-const sb = new Soundboard();
+const uiManager = new UIManager();
+const sb = new Soundboard(uiManager);
 const acr = new AudioChannelRecorder(sb);
 acr.startRecording();
 setTimeout(() => {
@@ -90,3 +125,7 @@ setTimeout(() => {
     acr.play();
     acr.clear();
 }, 5000);
+
+document.addEventListener('keypress', (event) => {
+    sb.playSound(event.key);
+})
