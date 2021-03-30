@@ -10,3 +10,8 @@
 .uimanager-button > span {
     font-size: 12px;
 }
+
+.channel-control-button {
+    height: 30px;
+    line-height: 30px;
+}
