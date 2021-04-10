@@ -116,15 +116,65 @@ class AudioChannelRecorder {
 
 }
 
+class AudioChannelUI {
+    private readonly id: number;
+    private playButton: HTMLButtonElement|null;
+    private stopButton: HTMLButtonElement|null;
+    private recordButton: HTMLButtonElement|null;
+    private deleteButton: HTMLButtonElement|null;
+    private acr: AudioChannelRecorder;
+
+    constructor(id: number, sb: Soundboard) {
+        this.id = id;
+        this.acr = new AudioChannelRecorder(sb);
+        this.playButton = null;
+        this.stopButton = null;
+        this.recordButton = null;
+        this.deleteButton = null;
+       this.init();
+    }
+
+    private init() {
+        this.playButton = document.querySelector(`[data-acr="${this.id}"] > [data-acr-action="play"]`);
+        this.stopButton = document.querySelector(`[data-acr="${this.id}"] > [data-acr-action="stop"]`);
+        this.recordButton = document.querySelector(`[data-acr="${this.id}"] > [data-acr-action="record"]`);
+        this.deleteButton = document.querySelector(`[data-acr="${this.id}"] > [data-acr-action="delete"]`);
+
+        console.log(this.playButton);
+
+        this.playButton?.addEventListener('click', () => this.play());
+        this.recordButton?.addEventListener('click', () => this.record());
+        this.stopButton?.addEventListener('click', () => this.stop());
+        this.deleteButton?.addEventListener('click', () => this.delete());
+    }
+
+    public play() {
+        console.log('playing');
+        this.acr.play();
+    }
+
+    public record() {
+        console.log('recording');
+        this.acr.startRecording();
+    }
+
+    public stop() {
+        console.log('stopping');
+        this.acr.stopRecording();
+    }
+
+    public delete() {
+        console.log('removing');
+        this.acr.clear();
+    }
+}
+
 const uiManager = new UIManager();
 const sb = new Soundboard(uiManager);
-const acr = new AudioChannelRecorder(sb);
-acr.startRecording();
-setTimeout(() => {
-    acr.stopRecording();
-    acr.play();
-    acr.clear();
-}, 5000);
+new AudioChannelUI(1, sb);
+new AudioChannelUI(2, sb);
+new AudioChannelUI(3, sb);
+new AudioChannelUI(4, sb);
 
 document.addEventListener('keypress', (event) => {
     sb.playSound(event.key);

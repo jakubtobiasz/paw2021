@@ -90,15 +90,53 @@ var AudioChannelRecorder = /** @class */ (function () {
     };
     return AudioChannelRecorder;
 }());
+var AudioChannelUI = /** @class */ (function () {
+    function AudioChannelUI(id, sb) {
+        this.id = id;
+        this.acr = new AudioChannelRecorder(sb);
+        this.playButton = null;
+        this.stopButton = null;
+        this.recordButton = null;
+        this.deleteButton = null;
+        this.init();
+    }
+    AudioChannelUI.prototype.init = function () {
+        var _this = this;
+        var _a, _b, _c, _d;
+        this.playButton = document.querySelector("[data-acr=\"" + this.id + "\"] > [data-acr-action=\"play\"]");
+        this.stopButton = document.querySelector("[data-acr=\"" + this.id + "\"] > [data-acr-action=\"stop\"]");
+        this.recordButton = document.querySelector("[data-acr=\"" + this.id + "\"] > [data-acr-action=\"record\"]");
+        this.deleteButton = document.querySelector("[data-acr=\"" + this.id + "\"] > [data-acr-action=\"delete\"]");
+        console.log(this.playButton);
+        (_a = this.playButton) === null || _a === void 0 ? void 0 : _a.addEventListener('click', function () { return _this.play(); });
+        (_b = this.recordButton) === null || _b === void 0 ? void 0 : _b.addEventListener('click', function () { return _this.record(); });
+        (_c = this.stopButton) === null || _c === void 0 ? void 0 : _c.addEventListener('click', function () { return _this.stop(); });
+        (_d = this.deleteButton) === null || _d === void 0 ? void 0 : _d.addEventListener('click', function () { return _this.delete(); });
+    };
+    AudioChannelUI.prototype.play = function () {
+        console.log('playing');
+        this.acr.play();
+    };
+    AudioChannelUI.prototype.record = function () {
+        console.log('recording');
+        this.acr.startRecording();
+    };
+    AudioChannelUI.prototype.stop = function () {
+        console.log('stopping');
+        this.acr.stopRecording();
+    };
+    AudioChannelUI.prototype.delete = function () {
+        console.log('removing');
+        this.acr.clear();
+    };
+    return AudioChannelUI;
+}());
 var uiManager = new UIManager();
 var sb = new Soundboard(uiManager);
-var acr = new AudioChannelRecorder(sb);
-acr.startRecording();
-setTimeout(function () {
-    acr.stopRecording();
-    acr.play();
-    acr.clear();
-}, 5000);
+new AudioChannelUI(1, sb);
+new AudioChannelUI(2, sb);
+new AudioChannelUI(3, sb);
+new AudioChannelUI(4, sb);
 document.addEventListener('keypress', function (event) {
     sb.playSound(event.key);
 });
