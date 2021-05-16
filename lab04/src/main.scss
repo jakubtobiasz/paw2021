@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background: lightblue;
+}
+
+#weather-data {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.card {
+  height: 220px;
+  width: 150px;
+  background: #fff;
+  margin-right: 15px;
+  margin-top: 15px;
+}

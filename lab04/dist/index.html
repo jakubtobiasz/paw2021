@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pogodynka</title>
+</head>
+<body>
+<main class="p-2">
+<div class="flex justify-center">
+    <div class="flex flex-col">
+        <label for="city" class="text-center">Nazwa miasta</label>
+        <input id="city-input" name="city"/>
+        <button id="add-city" class="mt-1 bg-blue-200 border border-blue-800 rounded">Dodaj miasto</button>
+    </div>
+</div>
+<div class="weather-container container mx-auto mt-5">
+    <div id="weather-data">
+        Loading...
+    </div>
+</div>
+</main>
+<script src="index.js"></script>
+</body>
+</html>
