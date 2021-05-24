@@ -37,6 +37,16 @@ export class NotesService {
         formErrorEl.innerHTML = '';
     }
 
+    togglePin(noteId: string) {
+        const note = this.storageManager.get(noteId);
+
+        if (!note) return;
+
+        note.pinned = !note.pinned;
+        this.storageManager.update(note);
+        this.renderNotes();
+    }
+
     renderNotes(): void {
         const notes = this.storageManager.getAll();
         const notesContainer = document.querySelector('#notes-container');
@@ -50,7 +60,7 @@ export class NotesService {
 
     private static getNoteHtml(note: INote) {
         return `
-            <div class="note note--${note.color}" data-note="${note.id}">
+            <div class="note note--${note.color}" data-noteid="${note.id}">
                 <button class="note__pin-button">
                     ${note.pinned ? '<i class="fas fa-star"></i>' : '<i class="far fa-star"></i>'}
                 </button>

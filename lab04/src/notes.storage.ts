@@ -18,7 +18,13 @@ export class NotesStorage implements INoteStorage {
     }
 
     getAll(): INote[] {
-        return JSON.parse(localStorage.getItem(this.storageKey) ?? "[]");
+        const parsedNotes = JSON.parse(localStorage.getItem(this.storageKey) ?? "[]") as INote[];
+        return parsedNotes.sort((a: INote, b: INote): number => {
+            if (a.pinned) return -1;
+            if (b.pinned) return 1;
+
+            return 0;
+        });
     }
 
     remove(note: INote): void {

@@ -19,3 +19,21 @@ body {
   margin-right: 15px;
   margin-top: 15px;
 }
+
+.note {
+  &--yellow {
+    background-color: #FCE7BA;
+  }
+
+  &--red {
+    background-color: #F5C6D7;
+  }
+
+  &--blue {
+    background-color: #75CCF1;
+  }
+
+  &--green {
+    background-color: #D6F8E0;
+  }
+}
