@@ -4,5 +4,6 @@ export class App {
     constructor() {
         const ns = new NotesService();
         ns.renderNotes();
+        document.querySelector('#add-note').addEventListener('click', () => ns.handleNoteAdd());
     }
 }

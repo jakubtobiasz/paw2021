@@ -8,6 +8,35 @@ export class NotesService {
         this.storageManager = NotesStorage.getInstance();
     }
 
+    handleNoteAdd(): void {
+        const noteTitleEl: HTMLInputElement = document.querySelector('#note-title');
+        const noteBodyEl: HTMLInputElement = document.querySelector('#note-body');
+        const noteColorEl: HTMLInputElement = document.querySelector('#note-color');
+        const formErrorEl: HTMLInputElement = document.querySelector('#form-error');
+
+        if (noteTitleEl.value.length < 3 || noteBodyEl.value.length < 3) {
+            formErrorEl.innerHTML = 'Tytuł oraz tekst muszą mieć minimum 3 znaki!!!';
+            return;
+        }
+
+        const note: INote = {
+            id: NotesService.getUuid(),
+            pinned: false,
+            body: noteBodyEl.value,
+            title: noteTitleEl.value,
+            color: noteColorEl.value,
+            createdAt: new Date()
+        };
+
+        this.storageManager.store(note);
+        this.renderNotes();
+
+        noteTitleEl.value = '';
+        noteBodyEl.value = '';
+        noteColorEl.value = 'yellow';
+        formErrorEl.innerHTML = '';
+    }
+
     renderNotes(): void {
         const notes = this.storageManager.getAll();
         const notesContainer = document.querySelector('#notes-container');
@@ -30,5 +59,12 @@ export class NotesService {
                 <div class="note__footer">${note.createdAt}</div>
             </div>
         `;
+    }
+
+    private static getUuid(): string {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+            const r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
     }
 }

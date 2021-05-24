@@ -34,6 +34,14 @@ export class NotesStorage implements INoteStorage {
     }
 
     update(note: INote): void {
+        const notes = this.getAll();
+        const mappedNotes = notes.map(row => {
+            if (row.id !== note.id) return row;
+
+            return {...note};
+        });
+
+        this.persistAll(mappedNotes);
     }
 
     persistAll(notes: INote[]): void {
