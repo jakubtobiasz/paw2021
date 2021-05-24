@@ -1,7 +1,8 @@
-import {UiManager} from "./ui.manager";
+import {NotesService} from "./notes.service";
 
 export class App {
     constructor() {
-        const uiManager = new UiManager();
+        const ns = new NotesService();
+        ns.renderNotes();
     }
 }
