@@ -7,13 +7,42 @@ export class App {
 
         document.querySelector('#add-note').addEventListener('click', () => ns.handleNoteAdd());
         document.addEventListener('click', (ev) => {
-            if (!ev.target || !(ev.target as HTMLElement).parentElement.classList.contains('note__pin-button')) return;
+            const tg: HTMLElement = ev.target as HTMLElement;
+            const tgParent: HTMLElement = tg?.parentElement;
 
-            const parent = (ev.target as HTMLElement).parentElement.parentElement;
-            if (parent) {
-                const noteId: string = parent.dataset.noteid;
-                ns.togglePin(noteId);
+            if (tg?.classList.contains('note__edit--action')) {
+                switch (tg.dataset.action) {
+                    case 'save':
+                        ns.saveChanges(tg.dataset.noteid);
+                        break;
+                    case 'cancel':
+                        ns.toggleEditMode(tg.dataset.noteid);
+                        break;
+                    default:
+                        console.log('nothing');
+                        break;
+                }
             }
+
+            if (tg?.classList.contains('note__action-button') || tgParent?.classList.contains('note__action-button')) {
+                const destinationTarget: HTMLElement = tg.closest('.note__action-button');
+
+                switch (destinationTarget.dataset.action) {
+                    case 'pin':
+                        ns.togglePin(destinationTarget.parentElement.dataset.noteid);
+                        break;
+                    case 'edit':
+                        ns.toggleEditMode(destinationTarget.parentElement.dataset.noteid);
+                        break;
+                    case 'delete':
+                        ns.deleteNote(destinationTarget.parentElement.dataset.noteid);
+                        break;
+                    default:
+                        console.log('nothing');
+                        break;
+                }
+            }
+
         });
     }
 }

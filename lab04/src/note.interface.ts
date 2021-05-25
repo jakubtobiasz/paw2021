@@ -4,5 +4,6 @@ export interface INote {
     body: string;
     color: string;
     pinned: boolean;
-    createdAt: Date;
+    createdAt: string;
+    editMode: boolean;
 }
