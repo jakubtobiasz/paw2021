@@ -13,34 +13,38 @@ export class NotesStorage implements INoteStorage {
         return this.instance;
     }
 
-    get(id: string): INote {
-        return this.getAll().filter(note => note.id === id)[0] ?? null;
+    async get(id: string): Promise<INote> {
+        const notes = await this.getAll();
+        return notes.filter(note => note.id === id)[0] ?? null;
     }
 
-    getAll(): INote[] {
+    async getAll(): Promise<INote[]> {
         const parsedNotes = JSON.parse(localStorage.getItem(this.storageKey) ?? "[]") as INote[];
-        return parsedNotes.sort((a: INote, b: INote): number => {
+        const sortedNotes = parsedNotes.sort((a: INote, b: INote): number => {
             if (a.pinned) return -1;
             if (b.pinned) return 1;
 
             return 0;
         });
+
+        return Promise.resolve(sortedNotes);
     }
 
-    remove(note: INote): void {
-        const filteredNotes = this.getAll().filter(row => row.id !== note.id)
+    async remove(noteId: string): Promise<void> {
+        const notes = await this.getAll();
+        const filteredNotes = notes.filter(row => row.id !== noteId);
 
         this.persistAll(filteredNotes);
     }
 
-    store(note: INote): void {
-        const currentNotes = this.getAll();
+    async store(note: INote): Promise<void> {
+        const currentNotes = await this.getAll();
         currentNotes.push(note);
         this.persistAll(currentNotes);
     }
 
-    update(note: INote): void {
-        const notes = this.getAll();
+    async update(note: INote): Promise<void> {
+        const notes = await this.getAll();
         const mappedNotes = notes.map(row => {
             if (row.id !== note.id) return row;
 

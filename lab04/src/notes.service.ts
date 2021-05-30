@@ -1,14 +1,16 @@
 import {NotesStorage} from "./notes.storage";
 import {INote} from "./note.interface";
+import {Storage} from "./storage";
+import {INoteStorage} from "./storage.interface";
 
 export class NotesService {
-    private readonly storageManager: NotesStorage;
+    private readonly storageManager: INoteStorage;
 
     constructor() {
-        this.storageManager = NotesStorage.getInstance();
+        this.storageManager = Storage.getProvider();
     }
 
-    handleNoteAdd(): void {
+    async handleNoteAdd() {
         const noteTitleEl: HTMLInputElement = document.querySelector('#note-title');
         const noteBodyEl: HTMLInputElement = document.querySelector('#note-body');
         const noteColorEl: HTMLInputElement = document.querySelector('#note-color');
@@ -30,8 +32,8 @@ export class NotesService {
             editMode: false
         };
 
-        this.storageManager.store(note);
-        this.renderNotes();
+        await this.storageManager.store(note);
+        await this.renderNotes();
 
         noteTitleEl.value = '';
         noteBodyEl.value = '';
@@ -39,49 +41,47 @@ export class NotesService {
         formErrorEl.innerHTML = '';
     }
 
-    togglePin(noteId: string) {
-        const note = this.storageManager.get(noteId);
+    async togglePin(noteId: string) {
+        const note = await this.storageManager.get(noteId);
 
         if (!note) return;
 
         note.pinned = !note.pinned;
-        this.storageManager.update(note);
-        this.renderNotes();
+        await this.storageManager.update(note);
+        await this.renderNotes();
     }
 
-    toggleEditMode(noteId: string) {
-        const note = this.storageManager.get(noteId);
+    async toggleEditMode(noteId: string) {
+        const note = await this.storageManager.get(noteId);
         note.editMode = !note.editMode;
 
-        this.storageManager.update(note);
-        this.renderNotes();
+        await this.storageManager.update(note);
+        await this.renderNotes();
     }
 
-    deleteNote(noteId: string) {
-        const note = this.storageManager.get(noteId);
-
-        this.storageManager.remove(note);
-        this.renderNotes();
+    async deleteNote(noteId: string) {
+        await this.storageManager.remove(noteId);
+        await this.renderNotes();
     }
 
-    saveChanges(noteId: string) {
+    async saveChanges(noteId: string) {
         const submitButton = document.querySelector(`.note__edit--action[data-action="save"][data-noteid="${noteId}"]`);
         const titleElement = submitButton.parentElement.querySelector('.note__title--edit') as HTMLInputElement;
         const bodyElement = submitButton.parentElement.querySelector('.note__body--edit') as HTMLTextAreaElement;
         const colorElement = submitButton.parentElement.querySelector('.note__color--edit') as HTMLSelectElement;
 
-        const note = this.storageManager.get(noteId);
+        const note = await this.storageManager.get(noteId);
         note.title = titleElement.value;
         note.body = bodyElement.value;
         note.color = colorElement.value;
         note.editMode = false;
 
-        this.storageManager.update(note);
-        this.renderNotes();
+        await this.storageManager.update(note);
+        await this.renderNotes();
     }
 
-    renderNotes(): void {
-        const notes = this.storageManager.getAll();
+    async renderNotes() {
+        const notes = await this.storageManager.getAll();
         const notesContainer = document.querySelector('#notes-container');
 
         let notesHtml = '';
