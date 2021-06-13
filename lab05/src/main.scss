@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background: lightblue;
+}
+
+#notes-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.note {
+  height: 220px;
+  width: 250px;
+  background: #fff;
+  margin-right: 15px;
+  margin-top: 15px;
+  padding: 0.5rem;
+
+  &__title {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+}
+
+.note {
+  &--yellow {
+    background-color: #FCE7BA;
+  }
+
+  &--red {
+    background-color: #F5C6D7;
+  }
+
+  &--blue {
+    background-color: #75CCF1;
+  }
+
+  &--green {
+    background-color: #D6F8E0;
+  }
+}
