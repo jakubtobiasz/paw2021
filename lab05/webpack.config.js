@@ -16,7 +16,7 @@ module.exports = {
         new CopyPlugin([
             {
                 from: "src/*.html",
-                to: "",
+                to: "dist",
                 flatten: true
             }
         ])
