@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kiedyś pogodynka, teraz notatki, a w przyszłości kto wie</title>
+    <script src="https://kit.fontawesome.com/d38a29fddd.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<main class="p-2">
+<div class="flex justify-center">
+    <div class="flex flex-col">
+        <span id="form-error"></span>
+        <label for="note-title" class="text-center">Nazwa notatki</label>
+        <input id="note-title" name="note-title"/>
+        <label for="note-body" class="text-center">Tekst notatki</label>
+        <textarea id="note-body" name="note-body"></textarea>
+        <label for="note-color" class="text-center">Kolor notatki</label>
+        <select id="note-color" name="note-color">
+            <option value="yellow">Żółty</option>
+            <option value="red">Czerwony</option>
+            <option value="green">Zielony</option>
+            <option value="blue">Niebieski</option>
+        </select>
+        <button id="add-note" class="mt-1 bg-blue-200 border border-blue-800 rounded">Dodaj notatkę</button>
+    </div>
+</div>
+<div id="notes-container" class="weather-container container mx-auto mt-5">
+</div>
+</main>
+<script src="index.js"></script>
+</body>
+</html>
